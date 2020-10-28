@@ -1,7 +1,9 @@
 1. void 和 undefined 有什么区别？
 
+      ```
       void表示没有任何类型。当一个函数没有返回值的时候，通常其返回类型是void。生声明一个void类型的变量没有什么作用，他的值只能为undefined或null。默认情况下null和undifined是所有类型的子类型。就是说你可以把null和undifined赋值给number类型的变量。（void是返回类型，undefined是值）                                                        
-
+      ```
+      
 2. 什么是 never 类型？
 
       ```                                                             

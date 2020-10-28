@@ -121,25 +121,29 @@
 14. module 关键字有什么用？
 
       ```                                                             
-      
+      module大致的意思就是模块，一个模块中有若干类，假如我写了两个类都叫 A 。
+      那怎么区分呢，那么就使用这个module关键词将这两个类定义在不同模块就行了。
+      module还有一个作用也是主要作用就是将一些不同特征的的类区分开。
       ```
 
 15. 如何处理才能在 TS 中引用 CSS 或者 图片使之不报错？
 
       ```                                                             
-      
+      import "./index.scss";
+      import imgPath from "./home.png";
       ```
 
 16. namespace 和 module 有什么区别?
 
       ```                                                             
-      
+      namespace是跨文件的，namespace的概念等同于包名
+      module是以文件为单位的，一个文件一个module,主要是解决加载依赖关系的。
       ```
 
 17. 哪些声明类型既可以当做 type 也可以当做 value？
 
       ```                                                             
-      
+      string
       ```
       
 18. 下面代码会不会报错？怎么解决？
@@ -148,6 +152,20 @@
       const obj = {
           a: 1,
           b: 'string',
+      };
+
+      obj.c = null;
+      ---------------------
+      会报错
+      interface myInterface {
+            a:number;
+            b:string;
+            [propName: string]: any;
+      };
+      
+      const obj:myInterface = {
+            a:1,
+            b: 'string',
       };
 
       obj.c = null;
@@ -160,8 +178,12 @@
           return a + 1;
       }
 
-      foo.bar = 123;    
-      
+      foo.bar = 123;  
+      -------------------------  
+      function foo (a: number) {
+             return a + 1;
+      }
+      console.log(foo(123)); 
       ```     
       
 20. 下面代码中，foo 的类型应该如何声明?
@@ -172,7 +194,16 @@
       for (let i = 0; i< 100; i++) {
           foo[String(i)] = i;
       }  
-      
+      ------------------------
+      interface Foo {
+            [key: string]:number;
+      }
+
+      let foo:Foo = {};
+
+      for (let i = 0; i< 100; i++) {
+          foo[String(i)] = i;
+      }
       ```       
       
 21. 下面代码中，foo 的类型应该如何声明?
@@ -182,7 +213,11 @@
           return String(value);
       }
       const foo = fn;
-      
+      ------------------------------
+      unction fn(value: number): string {
+          return String(value);
+      }
+      const foo: (value: number) => string = fn;  
       ```   
       
 22. 下面代码中，foo 的类型应该如何声明?
@@ -190,7 +225,9 @@
       ```     
       const foo = new Map();
       foo.set('bar', 1);
-      
+      ------------------------------
+      const foo = new Map<string, number>();
+      foo.set('bar', 1);
       ```   
       
 23. 下面代码会导致 TS 编译失败，如何修改 getValue 的类型声明。
@@ -201,7 +238,21 @@
       }
 
       getValue();
-      
+      ---------------------------
+      class Foo{
+      value: string;
+      constructor(v: string){
+             this.value = v;
+      }
+
+      getValue() {
+           return this.value;
+      }
+      };
+
+      let foo = new Foo('foo');
+
+      console.log(foo.getValue());
       ```       
       
 24. 下面代码里「date is Date」有什么作用？
@@ -211,11 +262,13 @@
         if (!date) return false;
         return Object.prototype.toString.call(date) === '[object Date]';
       }
-      
+      自定义类型保护的类型谓词, 把date作为Date类型处理
       ```         
       
 25. String 和 string 的区别？
 
       ```                                                             
-      
+      string是原始类型，基本类型字符串，不可以new  
+      var str: String = new String("Hello world");
+      var str: string = String("Hello World");
       ```  
